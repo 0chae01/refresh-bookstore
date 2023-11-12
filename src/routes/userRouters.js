@@ -28,7 +28,7 @@ router.get("/users", checkSession, isAdmin, getUsers);
 
 // non-RESTful API 엔드포인트...
 //사용자 정보 조회
-router.get("/userinfo", checkSession, getUserInfo);
+router.get("/userinfo", getUserInfo);
 //사용자 정보 업데이트
 router.post("/update", checkSession, updateUserValidator, updateUserInfo);
 
