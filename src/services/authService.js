@@ -17,7 +17,7 @@ exports.login = async (email, password) => {
     }
 
     // JWT 생성
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
       expiresIn: "1d",
     });
 
@@ -27,10 +27,10 @@ exports.login = async (email, password) => {
   }
 };
 
-exports.getUserInfo = async token => {
+exports.getUserInfo = async (token) => {
   try {
     // JWT 검증
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const user = await User.findById(decodedToken.userId);
 
     return {

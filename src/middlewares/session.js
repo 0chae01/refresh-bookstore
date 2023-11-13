@@ -1,8 +1,8 @@
 const session = require("express-session");
-const SECRET_KEY = process.env.SECRET_KEY;
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const sessionConfig = {
-  secret: SECRET_KEY,
+  secret: JWT_SECRET_KEY,
   resave: false,
   saveUninitialized: true,
   cookie: {
