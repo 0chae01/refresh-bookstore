@@ -14,6 +14,7 @@ const {
 } = require("../controllers/userController");
 const { deleteUserByEmail } = require("../services/userService");
 const { isAdmin } = require("../middlewares/isAdmin.js");
+const loginRequired = require("../middlewares/loginRequired");
 
 //회원가입
 router.post("/register", validateUserRegistration, createUser);
@@ -28,7 +29,7 @@ router.get("/users", checkSession, isAdmin, getUsers);
 
 // non-RESTful API 엔드포인트...
 //사용자 정보 조회
-router.get("/userinfo", checkSession, getUserInfo);
+router.get("/userinfo", loginRequired, getUserInfo);
 //사용자 정보 업데이트
 router.post("/update", checkSession, updateUserValidator, updateUserInfo);
 

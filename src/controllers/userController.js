@@ -38,16 +38,25 @@ exports.createUser = async (req, res, next) => {
 
 exports.getUserInfo = async (req, res, next) => {
   try {
-    if (!req.session.user) {
+    // if (!req.session.user) {
+    //   return res.status(401).send("Unauthorized");
+    // }
+    // const user = await userService.getUserByEmail(req.session.user.email);
+
+    // *** req.currentUserId 가 있으면 db에서 id로 유저 검색 후 정보 보내기
+    console.log(req.currentUserId);
+    if (!req.currentUserId) {
       return res.status(401).send("Unauthorized");
     }
 
-    const user = await userService.getUserByEmail(req.session.user.email);
+    const user = await User.findById(req.currentUserId);
+
     if (user === null) {
       // 유저가 존재하지 않는 경우
       return res.status(404).send("User not found");
     }
 
+    // *** res.locals?
     // req.user 객체 생성 후 res.locals에 저장
     req.user = {
       name: user.name,
@@ -111,4 +120,3 @@ exports.getUsers = async (req, res) => {
     res.status(500).json({ message: "서버 오류" });
   }
 };
-
